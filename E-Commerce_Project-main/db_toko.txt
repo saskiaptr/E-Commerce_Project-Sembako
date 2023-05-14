@@ -1,0 +1,169 @@
+insMicrosoft Windows [Version 10.0.22621.1555]
+(c) Microsoft Corporation. All rights reserved.
+
+C:\Users\Saskia Putri Ananda>cd/
+
+C:\>cd xampp\mysql\bin
+
+C:\xampp\mysql\bin>mysql -u root -p
+Enter password:
+Welcome to the MariaDB monitor.  Commands end with ; or \g.
+Your MariaDB connection id is 24
+Server version: 10.4.27-MariaDB mariadb.org binary distribution
+
+Copyright (c) 2000, 2018, Oracle, MariaDB Corporation Ab and others.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+MariaDB [(none)]> show databases;
++--------------------+
+| Database           |
++--------------------+
+| bdpegawai          |
+| bdpegawai1         |
+| dbpegawai          |
+| dbpos              |
+| dbsembako          |
+| dbtoko1            |
+| dbtokped           |
+| information_schema |
+| mysql              |
+| performance_schema |
+| phpmyadmin         |
+| test               |
++--------------------+
+12 rows in set (0.002 sec)
+
+MariaDB [(none)]> create database db_toko_sembako;
+Query OK, 1 row affected (0.006 sec)
+
+MariaDB [(none)]> show databases;
++--------------------+
+| Database           |
++--------------------+
+| bdpegawai          |
+| bdpegawai1         |
+| db_toko_sembako    |
+| dbpegawai          |
+| dbpos              |
+| dbsembako          |
+| dbtoko1            |
+| dbtokped           |
+| information_schema |
+| mysql              |
+| performance_schema |
+| phpmyadmin         |
+| test               |
++--------------------+
+13 rows in set (0.001 sec)
+
+MariaDB [(none)]> use db_toko_sembako;
+Database changed
+MariaDB [db_toko_sembako]> create table jenis_produk(
+    -> id int (11) not null,
+    -> jenis_produk varchar(191) not null
+    -> ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_g
+eneral_ci;
+Query OK, 0 rows affected (0.027 sec)
+
+MariaDB [db_toko_sembako]> INSERT INTO jenis_produk(id, jenis_produk) VALUES
+    -> (1, 'Beras'),
+    -> (2, 'Makanan Ringan'),
+    -> (3, 'Minuman Botol');
+Query OK, 3 rows affected (0.011 sec)
+Records: 3  Duplicates: 0  Warnings: 0
+
+MariaDB [db_toko_sembako]> create table pesanan(
+    -> id int (11) not null,
+    -> produk_id int(45) not null,
+    -> tanggal date not null,
+    -> quantity int(11) not null
+    -> )ENGINE=InnoDB DEFAULT CHARSET=uts8mmn4 COLLATE=utf8mb4_g
+eneral_ci;
+ERROR 1115 (42000): Unknown character set: 'uts8mmn4'
+MariaDB [db_toko_sembako]> ENGINE=InnoDB DEFAULT CHARSET=utf8mm
+n4 COLLATE=utf8mb4_general_ci;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near ')ENGINE=InnoDB DEFAULT CHARSET=utf8mmn4 COLLATE=utf8mb4_general_ci' at line 1
+MariaDB [db_toko_sembako]> create table pesanan(
+    -> id int (11) not null,
+    -> produk_id int(45) not null,
+    -> tanggal date not null,
+    -> quantity int(11) not null
+    -> ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_g
+eneral_ci;
+Query OK, 0 rows affected (0.032 sec)
+
+MariaDB [db_toko_sembako]> INSERT INTO pesanan (id, produk_id, tanggal, quantity) VALUES (1, 1, '2023-04-03', 2);
+Query OK, 1 row affected (0.009 sec)
+
+MariaDB [db_toko_sembako]> create table produk(
+    -> id int (11) not null,
+    -> nama varchar (191) not null,
+    -> stok int (11) not null,
+    -> harga int (45) not null,
+    -> berat varchar (191) not null,
+    -> jenis_produk_id int (45) not null
+    -> ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+Query OK, 0 rows affected (0.027 sec)
+
+MariaDB [db_toko_sembako]> insert into produk (id, nama, stok, h
+arga, berat, berat, jenis_produk_id) VALUES
+    -> (1, 'Lays rasa original kemasan', 300, 10000, '100 gram',
+ 2),
+    -> (2, 'Teh Botol Sosro kemasan', 20, 3000, '100 gram', 2),
+    -> (3, 'Beras Super', 30, 60000, '12 kg', 1);
+ERROR 1136 (21S01): Column count doesn't match value count at row 1
+MariaDB [db_toko_sembako]> insert into produk (id, nama, stok, harga, berat, berat, jenis_produk_id) VALUES
+    -> (1, 'Lays rasa original kemasan', 300, 10000, '100 gram', 2);
+ERROR 1136 (21S01): Column count doesn't match value count at row 1
+MariaDB [db_toko_sembako]> insert into produk (id, nama, stok, harga, berat, jenis_produk_id) VALUES
+    -> (1, 'Lays rasa original kemasan', 300, 10000, '100 gram', 2),
+    -> (2, 'Teh Botol Sosro kemasan', 20, 3000, '100 gram', 2),
+    -> (3, 'Beras Super', 30, 60000, '12 kg', 1);
+Query OK, 3 rows affected (0.008 sec)
+Records: 3  Duplicates: 0  Warnings: 0
+
+MariaDB [db_toko_sembako]> alter table jenis_produk add primary
+key (id);
+Query OK, 0 rows affected (0.081 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+MariaDB [db_toko_sembako]> alter table pesanan add primary key (
+id),
+    -> add key fk_pesanan1 (produk_id);
+Query OK, 0 rows affected (0.066 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+MariaDB [db_toko_sembako]> alter table produk add primary key (id), add key jenis_produk_id (jenis_produk_id);
+Query OK, 0 rows affected (0.085 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+MariaDB [db_toko_sembako]> alter table jenis_produk modify id in
+t (11) not null AUTO_INCREMENT, AUTO_INCREMENT=4;
+Query OK, 3 rows affected (0.078 sec)
+Records: 3  Duplicates: 0  Warnings: 0
+
+MariaDB [db_toko_sembako]> alter table pesanan modify id int (11
+) not null AUTO_INCREMENT, AUTO_INCREMENT=2;
+Query OK, 1 row affected (0.093 sec)
+Records: 1  Duplicates: 0  Warnings: 0
+
+MariaDB [db_toko_sembako]> alter table produk modify id int (11) not null AUTO_INCREMENT, AUTO_INCREMENT=4;
+Query OK, 3 rows affected (0.091 sec)
+Records: 3  Duplicates: 0  Warnings: 0
+
+MariaDB [db_toko_sembako]> alter table pesanan add constraints fk_pesanan1 foreign key produk_id references produk (id) on delet
+e cascade on update cascade;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near 'foreign key produk_id references produk (id) on delete cascade on update cascade' at line 1
+MariaDB [db_toko_sembako]> alter table pesanan ADD CONSTRAINT fk_pesanan1 FOREIGN KEY (produk_id) REFERENCES produk (id) on dele
+te cascade on update cascade;
+Query OK, 1 row affected (0.079 sec)
+Records: 1  Duplicates: 0  Warnings: 0
+
+MariaDB [db_toko_sembako]> alter table produk ADD CONSTRAINT jenis_produk_id FOREIGN KEY (jenis_profuk_id) REFERENCES jenis_produk (id) on delete cascade on update cascade;
+ERROR 1072 (42000): Key column 'jenis_profuk_id' doesn't exist in table
+MariaDB [db_toko_sembako]> alter table produk ADD CONSTRAINT jenis_produk_id FOREIGN KEY (jenis_produk_id) REFERENCES jenis_produk (id) on delete cascade on update cascade;
+Query OK, 3 rows affected (0.072 sec)
+Records: 3  Duplicates: 0  Warnings: 0
+
+MariaDB [db_toko_sembako]>
